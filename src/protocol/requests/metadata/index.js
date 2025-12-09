@@ -34,6 +34,95 @@ const versions = {
     const response = require('./v6/response')
     return { request: request({ topics, allowAutoTopicCreation }), response }
   },
+  7: ({ topics, allowAutoTopicCreation }) => {
+    const request = require('./v7/request')
+    const response = require('./v7/response')
+    return { request: request({ topics, allowAutoTopicCreation }), response }
+  },
+  8: ({
+    topics,
+    allowAutoTopicCreation,
+    includeClusterAuthorizedOperations,
+    includeTopicAuthorizedOperations,
+  }) => {
+    const request = require('./v8/request')
+    const response = require('./v8/response')
+    return {
+      request: request({
+        topics,
+        allowAutoTopicCreation,
+        includeClusterAuthorizedOperations,
+        includeTopicAuthorizedOperations,
+      }),
+      response,
+    }
+  },
+  9: ({
+    topics,
+    allowAutoTopicCreation,
+    includeClusterAuthorizedOperations,
+    includeTopicAuthorizedOperations,
+  }) => {
+    const request = require('./v9/request')
+    const response = require('./v9/response')
+    return {
+      request: request({
+        topics,
+        allowAutoTopicCreation,
+        includeClusterAuthorizedOperations,
+        includeTopicAuthorizedOperations,
+      }),
+      response,
+    }
+  },
+  10: ({ topics, allowAutoTopicCreation, includeTopicAuthorizedOperations }) => {
+    const request = require('./v10/request')
+    const response = require('./v10/response')
+    return {
+      request: request({
+        topics,
+        allowAutoTopicCreation,
+        includeTopicAuthorizedOperations,
+      }),
+      response,
+    }
+  },
+  11: ({ topics, allowAutoTopicCreation, includeTopicAuthorizedOperations }) => {
+    const request = require('./v11/request')
+    const response = require('./v11/response')
+    return {
+      request: request({
+        topics,
+        allowAutoTopicCreation,
+        includeTopicAuthorizedOperations,
+      }),
+      response,
+    }
+  },
+  12: ({ topics, allowAutoTopicCreation, includeTopicAuthorizedOperations }) => {
+    const request = require('./v12/request')
+    const response = require('./v12/response')
+    return {
+      request: request({
+        topics,
+        allowAutoTopicCreation,
+        includeTopicAuthorizedOperations,
+      }),
+      response,
+    }
+  },
+  13: ({ topics, allowAutoTopicCreation, includeTopicAuthorizedOperations }) => {
+    const request = require('./v13/request')
+    const response = require('./v13/response')
+    return {
+      request: request({
+        topics,
+        allowAutoTopicCreation,
+        includeTopicAuthorizedOperations,
+      }),
+      response,
+    }
+  },
 }
 
 module.exports = {

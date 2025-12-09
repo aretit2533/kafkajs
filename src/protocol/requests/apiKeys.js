@@ -46,4 +46,5 @@ module.exports = {
   IncrementalAlterConfigs: 44,
   AlterPartitionReassignments: 45,
   ListPartitionReassignments: 46,
+  ConsumerGroupHeartbeat: 68, // KIP-848: Next generation consumer rebalance protocol
 }

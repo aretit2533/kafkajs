@@ -14,6 +14,16 @@ const versions = {
     const response = require('./v2/response')
     return { request: request(), response }
   },
+  4: ({ statesFilter }) => {
+    const request = require('./v4/request')
+    const response = require('./v4/response')
+    return { request: request({ statesFilter }), response }
+  },
+  5: ({ statesFilter, typesFilter }) => {
+    const request = require('./v5/request')
+    const response = require('./v5/response')
+    return { request: request({ statesFilter, typesFilter }), response }
+  },
 }
 
 module.exports = {

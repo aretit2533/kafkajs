@@ -1,7 +1,7 @@
 {
-  "name": "kafkajs",
-  "version": "2.2.4",
-  "description": "A modern Apache Kafka client for node.js",
+  "name": "@aretit2533/kafkajs",
+  "version": "3.0.0",
+  "description": "A modern Apache Kafka client for node.js with extended protocol support (fork of kafkajs)",
   "author": "Tulio Ornelas <ornelas.tulio@gmail.com>",
   "main": "index.js",
   "types": "types/index.d.ts",
@@ -16,12 +16,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tulios/kafkajs.git"
+    "url": "https://github.com/aretit2533/kafkajs.git"
   },
   "bugs": {
-    "url": "https://github.com/tulios/kafkajs/issues"
+    "url": "https://github.com/aretit2533/kafkajs/issues"
   },
-  "homepage": "https://kafka.js.org",
+  "homepage": "https://github.com/aretit2533/kafkajs",
   "scripts": {
     "jest": "export KAFKA_VERSION=${KAFKA_VERSION:='2.4'} && NODE_ENV=test echo \"KAFKA_VERSION: ${KAFKA_VERSION}\" && KAFKAJS_DEBUG_PROTOCOL_BUFFERS=1 jest",
     "test:local": "yarn jest --detectOpenHandles",

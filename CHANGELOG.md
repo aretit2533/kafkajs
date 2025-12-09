@@ -1,9 +1,51 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+- Enhanced Protocol Encoder/Decoder for Latest Kafka Versions
+  - Added compact type encoding support (COMPACT_STRING, COMPACT_BYTES, COMPACT_ARRAY, COMPACT_RECORDS)
+  - Added `writeCompactString()`, `writeCompactNullableString()`, `writeCompactBytes()` to Encoder
+  - Added `readCompactString()`, `readCompactNullableString()`, `readCompactBytes()` to Decoder
+  - Enhanced `writeUVarIntArray()` with custom item writer function for flexible array encoding
+  - Added comprehensive `writeTaggedFields()` implementation for KIP-482 tagged fields support
+  - Enhanced `readUUID()` to handle null UUIDs (all zeros)
+  - Added convenience methods: `writeCompactRecords()`, `readCompactRecords()`, `readCompactArray()`
+
+### Documentation
+- Added KAFKA-PROTOCOL-UPGRADE-PLAN.md: Comprehensive protocol upgrade roadmap
+  - Identified 15 new missing API keys from latest Kafka protocol
+  - Documented version gaps for all existing APIs
+  - Created phased implementation plan (10-15 weeks estimated)
+  - Technical requirements and implementation guidelines
+- Added KAFKA-PROTOCOL-UPGRADE-STATUS.md: Current implementation status and next steps
+
+### Technical Improvements
+- Protocol foundation now ready for Kafka 2.4+ flexible versioning
+- Full KIP-482 compliance for tagged fields mechanism
+- KIP-516 ready with UUID topic ID support
+- Encoder/decoder prepared for upcoming protocol version upgrades
+
+
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+
+### Added
+  - Support for KIP-848 consumer group protocol (next generation rebalance protocol)
+  - New consumer configuration options: `groupProtocol` and `groupRemoteAssignor`
+  - ConsumerGroupHeartbeat protocol implementation for KIP-848
+  - UUID encoder/decoder support for protocol buffers
+  - Comprehensive documentation for KIP-848 migration and usage
+  - Example consumer using KIP-848 protocol
+
+### Changed
+  - Consumer configuration now supports `'classic'` or `'consumer'` protocol modes
+  - Server-side assignors (`'uniform'`, `'range'`) available with KIP-848 protocol
 
 ## [2.2.4] - 2023-02-27
 

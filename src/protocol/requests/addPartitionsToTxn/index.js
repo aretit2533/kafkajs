@@ -9,6 +9,16 @@ const versions = {
     const response = require('./v1/response')
     return { request: request({ transactionalId, producerId, producerEpoch, topics }), response }
   },
+  4: ({ transactionalId, producerId, producerEpoch, topics }) => {
+    const request = require('./v4/request')
+    const response = require('./v4/response')
+    return { request: request({ transactionalId, producerId, producerEpoch, topics }), response }
+  },
+  5: ({ transactionalId, producerId, producerEpoch, topics }) => {
+    const request = require('./v5/request')
+    const response = require('./v5/response')
+    return { request: request({ transactionalId, producerId, producerEpoch, topics }), response }
+  },
 }
 
 module.exports = {

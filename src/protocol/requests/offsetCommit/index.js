@@ -67,6 +67,45 @@ const versions = {
       response,
     }
   },
+  7: ({ groupId, groupGenerationId, memberId, topics }) => {
+    const request = require('./v7/request')
+    const response = require('./v7/response')
+    return {
+      request: request({
+        groupId,
+        groupGenerationId,
+        memberId,
+        topics,
+      }),
+      response,
+    }
+  },
+  8: ({ groupId, groupGenerationId, memberId, topics }) => {
+    const request = require('./v8/request')
+    const response = require('./v8/response')
+    return {
+      request: request({
+        groupId,
+        groupGenerationId,
+        memberId,
+        topics,
+      }),
+      response,
+    }
+  },
+  9: ({ groupId, groupGenerationId, memberId, topics }) => {
+    const request = require('./v9/request')
+    const response = require('./v9/response')
+    return {
+      request: request({
+        groupId,
+        groupGenerationId,
+        memberId,
+        topics,
+      }),
+      response,
+    }
+  },
 }
 
 module.exports = {

@@ -243,6 +243,223 @@ const versions = {
       requestTimeout: requestTimeout(maxWaitTime),
     }
   },
+  12: ({
+    replicaId = REPLICA_ID,
+    isolationLevel = ISOLATION_LEVEL.READ_COMMITTED,
+    sessionId = 0,
+    sessionEpoch = -1,
+    forgottenTopics = [],
+    maxWaitTime,
+    minBytes,
+    maxBytes,
+    topics,
+    rackId,
+  }) => {
+    const request = require('./v12/request')
+    const response = require('./v12/response')
+    return {
+      request: request({
+        replicaId,
+        isolationLevel,
+        sessionId,
+        sessionEpoch,
+        forgottenTopics,
+        maxWaitTime,
+        minBytes,
+        maxBytes,
+        topics,
+        rackId,
+      }),
+      response,
+      requestTimeout: requestTimeout(maxWaitTime),
+    }
+  },
+  13: ({
+    replicaId = REPLICA_ID,
+    isolationLevel = ISOLATION_LEVEL.READ_COMMITTED,
+    sessionId = 0,
+    sessionEpoch = -1,
+    forgottenTopics = [],
+    maxWaitTime,
+    minBytes,
+    maxBytes,
+    topics,
+    rackId,
+  }) => {
+    const request = require('./v13/request')
+    const response = require('./v13/response')
+    return {
+      request: request({
+        replicaId,
+        isolationLevel,
+        sessionId,
+        sessionEpoch,
+        forgottenTopics,
+        maxWaitTime,
+        minBytes,
+        maxBytes,
+        topics,
+        rackId,
+      }),
+      response,
+      requestTimeout: requestTimeout(maxWaitTime),
+    }
+  },
+  14: ({
+    replicaId = REPLICA_ID,
+    isolationLevel = ISOLATION_LEVEL.READ_COMMITTED,
+    sessionId = 0,
+    sessionEpoch = -1,
+    forgottenTopics = [],
+    maxWaitTime,
+    minBytes,
+    maxBytes,
+    topics,
+    rackId,
+  }) => {
+    const request = require('./v14/request')
+    const response = require('./v14/response')
+    return {
+      request: request({
+        replicaId,
+        isolationLevel,
+        sessionId,
+        sessionEpoch,
+        forgottenTopics,
+        maxWaitTime,
+        minBytes,
+        maxBytes,
+        topics,
+        rackId,
+      }),
+      response,
+      requestTimeout: requestTimeout(maxWaitTime),
+    }
+  },
+  15: ({
+    replicaId = REPLICA_ID,
+    isolationLevel = ISOLATION_LEVEL.READ_COMMITTED,
+    sessionId = 0,
+    sessionEpoch = -1,
+    forgottenTopics = [],
+    maxWaitTime,
+    minBytes,
+    maxBytes,
+    topics,
+    rackId,
+  }) => {
+    const request = require('./v15/request')
+    const response = require('./v15/response')
+    return {
+      request: request({
+        replicaId,
+        isolationLevel,
+        sessionId,
+        sessionEpoch,
+        forgottenTopics,
+        maxWaitTime,
+        minBytes,
+        maxBytes,
+        topics,
+        rackId,
+      }),
+      response,
+      requestTimeout: requestTimeout(maxWaitTime),
+    }
+  },
+  16: ({
+    replicaId = REPLICA_ID,
+    isolationLevel = ISOLATION_LEVEL.READ_COMMITTED,
+    sessionId = 0,
+    sessionEpoch = -1,
+    forgottenTopics = [],
+    maxWaitTime,
+    minBytes,
+    maxBytes,
+    topics,
+    rackId,
+  }) => {
+    const request = require('./v16/request')
+    const response = require('./v16/response')
+    return {
+      request: request({
+        replicaId,
+        isolationLevel,
+        sessionId,
+        sessionEpoch,
+        forgottenTopics,
+        maxWaitTime,
+        minBytes,
+        maxBytes,
+        topics,
+        rackId,
+      }),
+      response,
+      requestTimeout: requestTimeout(maxWaitTime),
+    }
+  },
+  17: ({
+    replicaId = REPLICA_ID,
+    isolationLevel = ISOLATION_LEVEL.READ_COMMITTED,
+    sessionId = 0,
+    sessionEpoch = -1,
+    forgottenTopics = [],
+    maxWaitTime,
+    minBytes,
+    maxBytes,
+    topics,
+    rackId,
+  }) => {
+    const request = require('./v17/request')
+    const response = require('./v17/response')
+    return {
+      request: request({
+        replicaId,
+        isolationLevel,
+        sessionId,
+        sessionEpoch,
+        forgottenTopics,
+        maxWaitTime,
+        minBytes,
+        maxBytes,
+        topics,
+        rackId,
+      }),
+      response,
+      requestTimeout: requestTimeout(maxWaitTime),
+    }
+  },
+  18: ({
+    replicaId = REPLICA_ID,
+    isolationLevel = ISOLATION_LEVEL.READ_COMMITTED,
+    sessionId = 0,
+    sessionEpoch = -1,
+    forgottenTopics = [],
+    maxWaitTime,
+    minBytes,
+    maxBytes,
+    topics,
+    rackId,
+  }) => {
+    const request = require('./v18/request')
+    const response = require('./v18/response')
+    return {
+      request: request({
+        replicaId,
+        isolationLevel,
+        sessionId,
+        sessionEpoch,
+        forgottenTopics,
+        maxWaitTime,
+        minBytes,
+        maxBytes,
+        topics,
+        rackId,
+      }),
+      response,
+      requestTimeout: requestTimeout(maxWaitTime),
+    }
+  },
 }
 
 module.exports = {

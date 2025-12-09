@@ -299,6 +299,68 @@ module.exports = class Decoder {
     return Decoder.decodeZigZag64(result)
   }
 
+  readUUID() {
+    const uuidBuffer = this.buffer.slice(this.offset, this.offset + 16)
+    this.offset += 16
+
+    // Check if it's a null UUID (all zeros)
+    let isNull = true
+    for (let i = 0; i < 16; i++) {
+      if (uuidBuffer[i] !== 0) {
+        isNull = false
+        break
+      }
+    }
+
+    if (isNull) {
+      return null
+    }
+
+    // Convert to standard UUID string format
+    const hex = uuidBuffer.toString('hex')
+    return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(
+      16,
+      20
+    )}-${hex.slice(20, 32)}`
+  }
+
+  /**
+   * Read COMPACT_STRING (string with unsigned varint length)
+   * Used in flexible version protocols
+   */
+  readCompactString() {
+    return this.readUVarIntString()
+  }
+
+  /**
+   * Read COMPACT_NULLABLE_STRING
+   */
+  readCompactNullableString() {
+    return this.readUVarIntString()
+  }
+
+  /**
+   * Read COMPACT_BYTES (bytes with unsigned varint length)
+   */
+  readCompactBytes() {
+    return this.readUVarIntBytes()
+  }
+
+  /**
+   * Read COMPACT_ARRAY with unsigned varint length
+   * @param {Function} reader - Function to read each item
+   */
+  readCompactArray(reader) {
+    return this.readUVarIntArray(reader)
+  }
+
+  /**
+   * Read COMPACT_RECORDS (compact bytes containing record batch)
+   */
+  readCompactRecords() {
+    return this.readUVarIntBytes()
+  }
+
   slice(size) {
     return new Decoder(this.buffer.slice(this.offset, this.offset + size))
   }

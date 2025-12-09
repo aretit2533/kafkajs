@@ -165,6 +165,8 @@ export interface ConsumerConfig {
   maxInFlightRequests?: number
   readUncommitted?: boolean
   rackId?: string
+  groupProtocol?: 'classic' | 'consumer'
+  groupRemoteAssignor?: string
 }
 
 export type PartitionAssigner = (config: {

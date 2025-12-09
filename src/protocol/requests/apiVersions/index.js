@@ -16,6 +16,24 @@ const versions = {
     const response = require('./v2/response')
     return { request: request(), response, logResponseError }
   },
+  3: ({ clientSoftwareName, clientSoftwareVersion } = {}) => {
+    const request = require('./v3/request')
+    const response = require('./v3/response')
+    return {
+      request: request({ clientSoftwareName, clientSoftwareVersion }),
+      response,
+      logResponseError,
+    }
+  },
+  4: ({ clientSoftwareName, clientSoftwareVersion } = {}) => {
+    const request = require('./v4/request')
+    const response = require('./v4/response')
+    return {
+      request: request({ clientSoftwareName, clientSoftwareVersion }),
+      response,
+      logResponseError,
+    }
+  },
 }
 
 module.exports = {

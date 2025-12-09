@@ -230,7 +230,9 @@ kafka.consumer({
   maxWaitTimeInMs: <Number>,
   retry: <Object>,
   maxInFlightRequests: <Number>,
-  rackId: <String>
+  rackId: <String>,
+  groupProtocol: <String>,
+  groupRemoteAssignor: <String>
 })
 ```
 
@@ -250,6 +252,8 @@ kafka.consumer({
 | readUncommitted        | Configures the consumer isolation level. If `false` (default), the consumer will not return any transactional messages which were not committed.                                                                                                                                                                                                   | `false`                           |
 | maxInFlightRequests | Max number of requests that may be in progress at any time. If falsey then no limit.                                    | `null` _(no limit)_ |
 | rackId                 | Configure the "rack" in which the consumer resides to enable [follower fetching](#follower-fetching)                 | `null` _(fetch from the leader always)_ |
+| groupProtocol          | Consumer group protocol: `'classic'` or `'consumer'` (KIP-848). See [Consumer Group Protocol](ConsumerGroupProtocol.md) for details | `'classic'` |
+| groupRemoteAssignor    | Server-side partition assignor when using `groupProtocol: 'consumer'`. Options: `'uniform'`, `'range'` | `null` _(defaults to 'uniform')_ |
 
 ## <a name="pause-resume"></a> Pause & Resume
 

@@ -16,6 +16,36 @@ const versions = {
     const response = require('./v2/response')
     return { request: request({ coordinatorKey: groupId, coordinatorType }), response }
   },
+  3: ({ groupId, coordinatorKey, coordinatorType = COORDINATOR_TYPES.GROUP }) => {
+    const request = require('./v3/request')
+    const response = require('./v3/response')
+    return {
+      request: request({ coordinatorKey: coordinatorKey || groupId, coordinatorType }),
+      response,
+    }
+  },
+  4: ({ groupId, coordinatorKey, coordinatorKeys, coordinatorType = COORDINATOR_TYPES.GROUP }) => {
+    const request = require('./v4/request')
+    const response = require('./v4/response')
+    return {
+      request: request({
+        coordinatorKeys: coordinatorKeys || coordinatorKey || groupId,
+        coordinatorType,
+      }),
+      response,
+    }
+  },
+  5: ({ groupId, coordinatorKey, coordinatorKeys, coordinatorType = COORDINATOR_TYPES.GROUP }) => {
+    const request = require('./v5/request')
+    const response = require('./v5/response')
+    return {
+      request: request({
+        coordinatorKeys: coordinatorKeys || coordinatorKey || groupId,
+        coordinatorType,
+      }),
+      response,
+    }
+  },
 }
 
 module.exports = {

@@ -15,6 +15,32 @@ const versions = {
       response,
     }
   },
+  4: ({
+    transactionalId,
+    groupId,
+    producerId,
+    producerEpoch,
+    generationId,
+    memberId,
+    groupInstanceId,
+    topics,
+  }) => {
+    const request = require('./v4/request')
+    const response = require('./v4/response')
+    return {
+      request: request({
+        transactionalId,
+        groupId,
+        producerId,
+        producerEpoch,
+        generationId,
+        memberId,
+        groupInstanceId,
+        topics,
+      }),
+      response,
+    }
+  },
 }
 
 module.exports = {

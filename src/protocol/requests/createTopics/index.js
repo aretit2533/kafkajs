@@ -19,6 +19,21 @@ const versions = {
     const response = require('./v3/response')
     return { request: request({ topics, validateOnly, timeout }), response }
   },
+  6: ({ topics, validateOnly, timeout }) => {
+    const request = require('./v6/request')
+    const response = require('./v6/response')
+    return { request: request({ topics, validateOnly, timeout }), response }
+  },
+  7: ({ topics, validateOnly, timeout }) => {
+    const request = require('./v7/request')
+    const response = require('./v7/response')
+    return { request: request({ topics, validateOnly, timeout }), response }
+  },
+  8: ({ topics, validateOnly, timeout }) => {
+    const request = require('./v8/request')
+    const response = require('./v8/response')
+    return { request: request({ topics, validateOnly, timeout }), response }
+  },
 }
 
 module.exports = {

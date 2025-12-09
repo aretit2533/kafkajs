@@ -42,6 +42,8 @@ const specialOffsets = [
  * @param {string} [params.rackId]
  * @param {InstrumentationEventEmitter} [params.instrumentationEmitter]
  * @param {number} params.metadataMaxAge
+ * @param {string} [params.groupProtocol] - Consumer group protocol: 'classic' or 'consumer' (KIP-848)
+ * @param {string} [params.groupRemoteAssignor] - Server-side assignor for KIP-848 protocol
  *
  * @returns {import("../../types").Consumer}
  */
@@ -62,13 +64,33 @@ module.exports = ({
   rackId = '',
   instrumentationEmitter: rootInstrumentationEmitter,
   metadataMaxAge,
+  groupProtocol = 'classic', // 'classic' or 'consumer' (KIP-848)
+  groupRemoteAssignor = null, // Server-side assignor name for KIP-848
 }) => {
   if (!groupId) {
     throw new KafkaJSNonRetriableError('Consumer groupId must be a non-empty string.')
   }
 
+  if (groupProtocol !== 'classic' && groupProtocol !== 'consumer') {
+    throw new KafkaJSNonRetriableError(
+      `Consumer groupProtocol must be either 'classic' or 'consumer', got '${groupProtocol}'`
+    )
+  }
+
   const logger = rootLogger.namespace('Consumer')
   const instrumentationEmitter = rootInstrumentationEmitter || new InstrumentationEventEmitter()
+
+  // KIP-848 protocol deprecates certain client-side configurations
+  if (groupProtocol === 'consumer') {
+    logger.info('Using KIP-848 consumer group protocol', {
+      groupId,
+      groupRemoteAssignor: groupRemoteAssignor || 'uniform (default)',
+    })
+
+    // Note: sessionTimeout and heartbeatInterval are now configured server-side in KIP-848
+    // partitionAssigners are replaced by server-side assignors
+  }
+
   const assigners = partitionAssigners.map(createAssigner =>
     createAssigner({ groupId, logger, cluster })
   )

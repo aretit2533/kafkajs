@@ -127,6 +127,149 @@ const versions = {
       logResponseError: logResponseError(memberId),
     }
   },
+  6: ({
+    groupId,
+    sessionTimeout,
+    rebalanceTimeout,
+    memberId,
+    groupInstanceId,
+    protocolType,
+    groupProtocols,
+  }) => {
+    const request = require('./v6/request')
+    const response = require('./v6/response')
+
+    return {
+      request: request({
+        groupId,
+        sessionTimeout,
+        rebalanceTimeout,
+        memberId,
+        groupInstanceId,
+        protocolType,
+        groupProtocols,
+      }),
+      response,
+      requestTimeout: requestTimeout({ rebalanceTimeout, sessionTimeout }),
+      logResponseError: logResponseError(memberId),
+    }
+  },
+  7: ({
+    groupId,
+    sessionTimeout,
+    rebalanceTimeout,
+    memberId,
+    groupInstanceId,
+    protocolType,
+    groupProtocols,
+    reason,
+  }) => {
+    const request = require('./v7/request')
+    const response = require('./v7/response')
+
+    return {
+      request: request({
+        groupId,
+        sessionTimeout,
+        rebalanceTimeout,
+        memberId,
+        groupInstanceId,
+        protocolType,
+        groupProtocols,
+        reason,
+      }),
+      response,
+      requestTimeout: requestTimeout({ rebalanceTimeout, sessionTimeout }),
+      logResponseError: logResponseError(memberId),
+    }
+  },
+  8: ({
+    groupId,
+    sessionTimeout,
+    rebalanceTimeout,
+    memberId,
+    groupInstanceId,
+    protocolType,
+    groupProtocols,
+    reason,
+  }) => {
+    const request = require('./v8/request')
+    const response = require('./v8/response')
+
+    return {
+      request: request({
+        groupId,
+        sessionTimeout,
+        rebalanceTimeout,
+        memberId,
+        groupInstanceId,
+        protocolType,
+        groupProtocols,
+        reason,
+      }),
+      response,
+      requestTimeout: requestTimeout({ rebalanceTimeout, sessionTimeout }),
+      logResponseError: logResponseError(memberId),
+    }
+  },
+  9: ({
+    groupId,
+    sessionTimeout,
+    rebalanceTimeout,
+    memberId,
+    groupInstanceId,
+    protocolType,
+    groupProtocols,
+    reason,
+  }) => {
+    const request = require('./v9/request')
+    const response = require('./v9/response')
+
+    return {
+      request: request({
+        groupId,
+        sessionTimeout,
+        rebalanceTimeout,
+        memberId,
+        groupInstanceId,
+        protocolType,
+        groupProtocols,
+        reason,
+      }),
+      response,
+      requestTimeout: requestTimeout({ rebalanceTimeout, sessionTimeout }),
+      logResponseError: logResponseError(memberId),
+    }
+  },
+  10: ({
+    groupId,
+    sessionTimeout,
+    rebalanceTimeout,
+    memberId,
+    groupInstanceId,
+    protocolType,
+    groupProtocols,
+    reason,
+  }) => {
+    const request = require('./v10/request')
+    const response = require('./v10/response')
+
+    return {
+      request: request({
+        groupId,
+        sessionTimeout,
+        rebalanceTimeout,
+        memberId,
+        groupInstanceId,
+        protocolType,
+        groupProtocols,
+        reason,
+      }),
+      response,
+      requestTimeout: requestTimeout({ rebalanceTimeout, sessionTimeout }),
+      logResponseError: logResponseError(memberId),
+    }
+  },
 }
 
 module.exports = {

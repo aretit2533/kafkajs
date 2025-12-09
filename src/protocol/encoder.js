@@ -394,6 +394,149 @@ module.exports = class Encoder {
     return this
   }
 
+  writeUUID(value) {
+    if (value == null) {
+      // Write null UUID (all zeros)
+      this.ensureAvailable(16)
+      this.buf.fill(0, this.offset, this.offset + 16)
+      this.offset += 16
+      return this
+    }
+
+    if (Buffer.isBuffer(value)) {
+      if (value.length !== 16) {
+        throw new Error('UUID buffer must be exactly 16 bytes')
+      }
+      this.writeBufferInternal(value)
+      return this
+    }
+
+    if (typeof value === 'string') {
+      // Parse UUID string format: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      const hex = value.replace(/-/g, '')
+      if (hex.length !== 32) {
+        throw new Error('UUID string must be in format xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
+      }
+      const buffer = Buffer.from(hex, 'hex')
+      this.writeBufferInternal(buffer)
+      return this
+    }
+
+    throw new Error('UUID must be a Buffer or string')
+  }
+
+  /**
+   * Write a COMPACT_ARRAY with unsigned varint length (length + 1)
+   * Used in flexible version protocols (Kafka 2.4+)
+   * @param {Array} array - The array to write
+   * @param {Function} itemWriter - Function to write each item: (encoder, item) => {}
+   */
+  writeUVarIntArray(array, itemWriter) {
+    if (array == null || array.length === 0) {
+      this.writeUVarInt(0) // null or empty = 0
+      return this
+    }
+
+    this.writeUVarInt(array.length + 1) // length + 1 for non-null arrays
+    if (typeof itemWriter === 'function') {
+      array.forEach(item => itemWriter(this, item))
+    } else {
+      // Fallback for backwards compatibility
+      array.forEach(item => {
+        if (typeof item === 'object' && item !== null && item.buf) {
+          this.writeEncoder(item)
+        }
+      })
+    }
+    return this
+  }
+
+  /**
+   * Write COMPACT_STRING (string with unsigned varint length)
+   * Used in flexible version protocols
+   * @param {string|null} value - The string to write
+   */
+  writeCompactString(value) {
+    return this.writeUVarIntString(value)
+  }
+
+  /**
+   * Write COMPACT_NULLABLE_STRING
+   * @param {string|null} value - The string to write
+   */
+  writeCompactNullableString(value) {
+    return this.writeUVarIntString(value)
+  }
+
+  /**
+   * Write COMPACT_BYTES (bytes with unsigned varint length)
+   * @param {Buffer|string|null} value - The bytes to write
+   */
+  writeCompactBytes(value) {
+    return this.writeUVarIntBytes(value)
+  }
+
+  /**
+   * Write tagged fields (used in flexible versioned messages)
+   * Tagged fields allow adding new optional fields without breaking compatibility
+   * Format: num_tags:uvarint (tag_id:uvarint size:uvarint data:bytes)*
+   *
+   * @param {Object|null} taggedFields - Map of tag IDs to field data
+   */
+  writeTaggedFields(taggedFields) {
+    if (taggedFields == null || Object.keys(taggedFields).length === 0) {
+      this.writeUVarInt(0) // No tagged fields
+      return this
+    }
+
+    const tags = Object.keys(taggedFields)
+      .map(Number)
+      .filter(n => !isNaN(n))
+      .sort((a, b) => a - b)
+
+    this.writeUVarInt(tags.length)
+
+    tags.forEach(tag => {
+      const data = taggedFields[tag]
+      this.writeUVarInt(tag)
+
+      if (Buffer.isBuffer(data)) {
+        this.writeUVarInt(data.length)
+        this.writeBufferInternal(data)
+      } else if (typeof data === 'object' && data.buf) {
+        // Encoder instance
+        const buffer = data.buffer
+        this.writeUVarInt(buffer.length)
+        this.writeBufferInternal(buffer)
+      } else {
+        // Assume it's a raw value that needs encoding
+        const tempEncoder = new Encoder()
+        if (typeof data === 'string') {
+          tempEncoder.writeCompactString(data)
+        } else if (typeof data === 'number') {
+          tempEncoder.writeVarInt(data)
+        } else if (typeof data === 'boolean') {
+          tempEncoder.writeBoolean(data)
+        } else {
+          throw new Error(`Unsupported tagged field type for tag ${tag}`)
+        }
+        const buffer = tempEncoder.buffer
+        this.writeUVarInt(buffer.length)
+        this.writeBufferInternal(buffer)
+      }
+    })
+
+    return this
+  }
+
+  /**
+   * Write COMPACT_RECORDS (compact bytes containing record batch)
+   * @param {Buffer|null} records - The record batch buffer
+   */
+  writeCompactRecords(records) {
+    return this.writeUVarIntBytes(records)
+  }
+
   size() {
     // We can use the offset here directly, because we anyways will not re-encode the buffer when writing
     return this.offset
